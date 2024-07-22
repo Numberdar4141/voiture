@@ -38,8 +38,18 @@ const Header = () => {
             className="ace-responsive-menu text-end"
             data-menu-style="horizontal"
           >
-            <li className="">
-              <Link href="/add-listings">Home</Link>
+            <li className="add_listing">
+              <Link href="/">Home</Link>
+            </li>
+            
+            <li className="add_listing">
+              <Link href="/listing-v1">Buy Car</Link>
+            </li>
+            <li className="add_listing">
+              <Link href="/">Sell Car</Link>
+            </li>
+            <li className="add_listing">
+              <Link href="/cart">Shortlist</Link>
             </li>
             <MainMenu />
             <li className="add_listing">

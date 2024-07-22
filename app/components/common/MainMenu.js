@@ -20,7 +20,7 @@ const MainMenu = () => {
                         href="#"
                     >
                         <span className="title">{menuItem.label}</span>
-                        <span className="arrow"></span>
+                        {/* <span className="arrow"></span> */}
                     </a>
                     <ul className="sub-menu">
                         {menuItem.subMenu.map((subItem, subIndex) => (

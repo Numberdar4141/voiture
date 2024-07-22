@@ -32,6 +32,7 @@ const FeaturedFilterListing = () => {
 
 
   return (
+    
     <div className="popular_listing_sliders">
       {/* Nav tabs */}
       <div className="nav nav-tabs justify-content-center">

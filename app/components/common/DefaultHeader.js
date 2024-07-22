@@ -38,13 +38,21 @@ const DefaultHeader = () => {
             className="ace-responsive-menu text-end"
             data-menu-style="horizontal"
           >
+             <li className="add_listing">
+              <Link href="/">Home</Link>
+            </li>
+            <li className="add_listing">
+              <Link href="/listing-v1">Buy Car</Link>
+            </li>
+            <li className="add_listing">
+              <Link href="/add-listings">Sell Car</Link>
+            </li>
+            <li className="add_listing">
+              <Link href="/cart">Shortlist</Link>
+            </li>
             <MainMenu />
-            <li className="add_listing">
-              <Link href="/add-listings">Home</Link>
-            </li>
-            <li className="add_listing">
-              <Link href="/add-listings">+ Add Listingxwd</Link>
-            </li>
+           
+           
             <li
               className="sidebar_panel"
               data-bs-toggle="offcanvas"
