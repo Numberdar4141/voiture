@@ -22512,12 +22512,23 @@ canvas#myChart {
 .partner_item {
   border: 1px solid #eaeaea;
   border-radius: 8px;
+  color: black;
+  font-size: 80px;
   margin-bottom: 20px;
-  padding: 40px 30px;
+  padding: 10px 10px;
   position: relative;
   text-align: center;
   width: 100%;
 }
+
+.partner_item :hover{
+  color:rgb(79, 79, 79);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+  
+}
+
+
 .partner_item.home4_style {
   border: none;
   padding: 0 30px;

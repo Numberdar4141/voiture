@@ -2,6 +2,7 @@
 const nextConfig = {
     images: {
         domains: ['motorpediastoragedev.blob.core.windows.net'],
+        
       },
 };
 

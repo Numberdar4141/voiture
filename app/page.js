@@ -21,10 +21,10 @@ import {
 //   title: "Home Selector || Voiture - Automotive & Car Dealer NextJS Template",
 //   description: `Voiture - Automotive & Car Dealer NextJS Template.`,
 // };
-
+const queryClient = new QueryClient();
 export default function MainRoot() {
   const [selectedHome, setSelectedHome] = useState(null);
-  const queryClient = new QueryClient();
+
 
   return (
     <QueryClientProvider client={queryClient}>

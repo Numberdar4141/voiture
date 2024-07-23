@@ -1,3 +1,5 @@
+"use client"
+import { CarDetails } from "@/app/api/useTanStackQuery";
 import Footer from "@/app/components/common/Footer";
 import DefaultHeader from "@/app/components/common/DefaultHeader";
 import HeaderSidebar from "@/app/components/common/HeaderSidebar";
@@ -5,7 +7,7 @@ import HeaderTop from "@/app/components/common/HeaderTop";
 import MobileMenu from "@/app/components/common/MobileMenu";
 import LoginSignupModal from "@/app/components/common/login-signup";
 import BreadCrumb from "@/app/components/listing/listing-single/BreadCrumb";
-import ShareMeta from "../../../components/listing/listing-single/ShareMeta";
+import ShareMeta from "../../../../components/listing/listing-single/ShareMeta";
 import ProductGallery from "@/app/components/listing/listing-single/listing-single-v1/ProductGallery";
 import Overview from "@/app/components/listing/listing-single/Overview";
 import Descriptions from "@/app/components/listing/listing-single/Descriptions";
@@ -17,13 +19,42 @@ import ContactSeller from "@/app/components/listing/listing-single/sidebar/Conta
 import SellerDetail from "@/app/components/listing/listing-single/sidebar/SellerDetail";
 import Link from "next/link";
 import ReleatedCar from "@/app/components/listing/listing-single/ReleatedCar";
-
-export const metadata = {
-  title:
-    "Listing Single V1 || Voiture - Automotive & Car Dealer NextJS Template",
-};
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import { useEffect, useState } from "react";
+// export const metadata = {
+//   title:
+//     "Listing Single V1 || Voiture - Automotive & Car Dealer NextJS Template",
+// };
 
 const ListingSingleV1 = () => {
+  const [carData, setCarData] = useState([]);
+  const { slugs } = useParams();
+
+  const formatNumberWithCommas = (number) => {
+    return new Intl.NumberFormat("en-IN").format(number);
+  };
+  useEffect(() => {
+    const fetchCarData = async () => {
+      try {
+        const carData = await CarDetails(slugs && slugs?.[0]); // Assuming CarDetails fetches data based on car ID
+        setCarData(carData);
+        console.log(carData)
+      } catch (error) {
+        console.error("Error fetching car details:", error);
+      }
+    };
+
+    fetchCarData();
+  }, [slugs]);  
+
+
+  // if (!carData) return <div>Loading...</div>;
+
   return (
     <div className="wrapper">
       <div
@@ -80,9 +111,9 @@ const ListingSingleV1 = () => {
                       </a>
                     </li>
                   </ul>
-                  <h2 className="title">Volvo XC 90</h2>
+                  <h2 className="title"> {`${carData[0]?.brand_name} ${carData[0]?.model} ${carData[0]?.variant}`}</h2>
                   <p className="para">
-                    2.0h T8 11.6kWh Polestar Engineered Auto AWD (s/s) 5dr
+                   Test Drive Available
                   </p>
                 </div>
               </div>
@@ -98,9 +129,25 @@ const ListingSingleV1 = () => {
                   <div className="price mt60 mb10 mt10-md">
                     <h3>
                       <small className="mr15">
-                        <del>$92,480</del>
+                        <del>
+
+                    
+                      <span className="line-through text-[#00000070]">
+                        <span>&#8377;</span>
+                        {formatNumberWithCommas(carData[0]?.actual_price)}
+                      </span>{" "}
+                        </del>
+                      (Save <span>&#8377;</span>
+                      {formatNumberWithCommas(
+                        carData[0]?.actual_price - carData[0]?.discounted_price
+                      )}
+                      )
+                   
                       </small>
-                      $89,480
+               
+                        <span>&#8377;</span>
+                        {formatNumberWithCommas(carData[0]?.discounted_price)}
+                    
                     </h3>
                   </div>
                 </div>

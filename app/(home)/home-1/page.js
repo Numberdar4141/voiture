@@ -51,7 +51,27 @@ const Home_1 = () => {
       {/* Hero */}
       <Hero />
       {/* End Hero */}
+  {/* Our Partners */}
+  <section className="our-partner pt100 pb100">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 offset-lg-3">
+              <div className="main-title text-center">
+                <h2>Popular Makes</h2>
+              </div>
+            </div>
+          </div>
+          {/* End .row */}
 
+          <div className="partner_divider">
+            <div className="row">
+              <Partner />
+            </div>
+            {/* End .row */}
+          </div>
+        </div>
+      </section>
+      {/* End  Our Partners */}
       {/* Car Category */}
       <section className="car-category mobile_space bgc-f9  pb100">
         <div className="container">
@@ -198,27 +218,7 @@ const Home_1 = () => {
       </section>
       {/* End Our Blog */}
 
-      {/* Our Partners */}
-      <section className="our-partner pt0 pb100">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-6 offset-lg-3">
-              <div className="main-title text-center">
-                <h2>Popular Makes</h2>
-              </div>
-            </div>
-          </div>
-          {/* End .row */}
-
-          <div className="partner_divider">
-            <div className="row">
-              <Partner />
-            </div>
-            {/* End .row */}
-          </div>
-        </div>
-      </section>
-      {/* End  Our Partners */}
+    
 
       {/* Our Footer */}
       <Footer />

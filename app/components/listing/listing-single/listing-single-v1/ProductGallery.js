@@ -1,87 +1,59 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import ModalVideo from "react-modal-video";
 import "react-modal-video/scss/modal-video.scss";
-
-// import required modules
+import { CarDetails } from "@/app/api/useTanStackQuery"; 
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
-const slides = [
-  {
-    imageSrc: "/images/listing/lsp1-v1.jpg",
-    videoId: "VWrJkx6O0L8",
-  },
-  {
-    imageSrc: "/images/listing/lsp1-v2.jpg",
-    videoId: "TLEyLGWvjII",
-  },
-  {
-    imageSrc: "/images/listing/lsp1-v3.jpg",
-    videoId: "BS2jGGYC60c",
-  },
-  {
-    imageSrc: "/images/listing/lsp1-v4.jpg",
-    videoId: "8PiZNUCexrA",
-  },
-  {
-    imageSrc: "/images/listing/lsp1-v5.jpg",
-    videoId: "m4ZGuAbUMg8",
-  },
-];
+
 
 export default function ProductGallery() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [isOpen, setOpen] = useState(false);
   const [videoId, setVideoId] = useState("");
+  const [carData, setCarData] = useState([]); 
+  const { slugs } = useParams();
 
-  const openModal = (id) => {
-    setVideoId(id);
-    setOpen(true);
-  };
+  useEffect(() => {
+    const fetchCarData = async () => {
+      try {
+        const fetchedCarData = await CarDetails(slugs && slugs?.[0]); // Fetch car details based on slugs (car ID or identifier)
+        setCarData(fetchedCarData); // Update carData state with fetched data
+      } catch (error) {
+        console.error("Error fetching car details:", error);
+      }
+    };
+
+    fetchCarData();
+  }, [slugs]);  
 
   return (
     <>
       <div className="row">
         <div className="col-lg-12">
           <Swiper
-            style={{
-              "--swiper-navigation-color": "#fff",
-              "--swiper-pagination-color": "#fff",
-            }}
             spaceBetween={10}
             navigation={true}
-            thumbs={{
-              swiper:
-                thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
-            }}
-            modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper2 sps_content single_product_grid user_profile "
+            thumbs={{ swiper: thumbsSwiper }}
+            modules={[Navigation, Thumbs]}
+            className="mySwiper2 sps_content single_product_grid user_profile"
           >
-            {slides.map((slide, index) => (
+            {carData.map((car, index) => (
               <SwiperSlide key={index}>
                 <div className="item">
-                  <Image
-                    width={856}
-                    height={554}
-                    priority
-                    style={{ objectFit: "cover" }}
+                  <img
+                    src={car?.images?.[0]?.img_url} // Adjust the path according to your API response
+                    alt={car.model}
+                    width={456}
+                    height={254}
+                    objectFit="cover"
                     className="w-100 h-100"
-                    src={slide.imageSrc}
-                    alt="large car"
+                    priority
                   />
-
-                  <div className="overlay_icon">
-                    <button
-                      className="video_popup_btn popup-img popup-youtube"
-                      onClick={() => openModal(slide.videoId)}
-                    >
-                      <span className="flaticon-play-button" />
-                      Video
-                    </button>
-                  </div>
                 </div>
               </SwiperSlide>
             ))}
@@ -93,21 +65,22 @@ export default function ProductGallery() {
             slidesPerView={5}
             freeMode={true}
             watchSlidesProgress={true}
-            modules={[FreeMode, Navigation, Thumbs]}
+            modules={[FreeMode, Thumbs]}
             className="mySwiper mt-2 thumb-gallery-opacity"
           >
-            {slides.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <Image
-                  width={163}
-                  height={106}
-                  priority
-                  style={{ objectFit: "cover" }}
-                  src={slide.imageSrc}
-                  alt="thum car"
-                />
-              </SwiperSlide>
-            ))}
+            {carData.length > 0 &&
+              carData[0]?.images?.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <Image
+                    src={image.img_url}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={163}
+                    height={106}
+                    objectFit="cover"
+                    priority
+                  />
+                </SwiperSlide>
+              ))}
           </Swiper>
         </div>
       </div>
