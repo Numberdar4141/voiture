@@ -18,6 +18,7 @@ const FeaturedFilterListing = () => {
     queryFn: () => SearchCar({}),
     staleTime: 5000,
   });
+  console.log("naveen",SearchData)
 
   if (SearchIsLoading) return <div>Loading...</div>;
   if (SearchIsError) return <div>Error loading data...</div>;
@@ -82,8 +83,8 @@ const FeaturedFilterListing = () => {
                       objectFit: "cover",
                     }}
                     priority
-                    src={car.image_url}
-                    alt={car.model}
+                    src={car.imageUrl}
+                    alt={car.modalName}
                   />
                   <div className="thmb_cntnt2">
                     <ul className="mb0">
@@ -117,9 +118,9 @@ const FeaturedFilterListing = () => {
                 <div className="details">
                   <div className="wrapper">
                     <h6 className="title">
-                      <Link  href={`/listing-single-v1/${car.car_id}`}>
-                        {car.make_year} {car.brand_name} {car.model}{" "}
-                        {car.variant}
+                      <Link  href={`/listing-single-v1/${car.carSkuId}`}>
+                        {car.make_year} {car.make} {car.modalName}{" "}
+                        {car.varientName}
                       </Link>
                     </h6>
                     <h5 className="price">

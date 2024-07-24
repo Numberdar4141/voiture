@@ -49,9 +49,9 @@ const HeroFilter = () => {
   };
 
   const handleBrandChange = async (event, value) => {
-    const selectedBrand = carMakes.find((option) => option.brand_name === value);
+    const selectedBrand = carMakes.find((option) => option.makeName === value);
     if (selectedBrand) {
-      setCarMake(selectedBrand.brand_name);
+      setCarMake(selectedBrand.makeName);
       setSelectedBrandId(selectedBrand.id);
       setCarModel("");
     }
@@ -109,7 +109,7 @@ const HeroFilter = () => {
                     <Autocomplete
                       value={carMake}
                       onChange={handleBrandChange}
-                      options={carMakes.map((option) => option.brand_name)}
+                      options={carMakes.map((option) => option.makeName)}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -129,7 +129,7 @@ const HeroFilter = () => {
                     <Autocomplete
                       value={carModel}
                       onChange={handleModelChange}
-                      options={carModels.map((option) => option.description)}
+                      options={carModels.map((option) => option.groupModelName)}
                       renderInput={(params) => (
                         <TextField
                           {...params}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MainMenu from "../../common/MainMenu";
 import Image from "next/image";
+import { Autocomplete, TextField } from "@mui/material";
 
 const Header = () => {
   return (
@@ -38,6 +39,26 @@ const Header = () => {
             className="ace-responsive-menu text-end"
             data-menu-style="horizontal"
           >
+                <li className="list-inline-item ">
+                <div className="select-boxes">
+                  <div className="car_brand">
+                    <Autocomplete
+                      value="city"
+                      // onChange={handleModelChange}
+                      options={[1,3]}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Select City"
+                          variant="outlined"
+                          // disabled={!carMake}
+                        />
+                      )}
+                    />
+                  </div>
+                </div>
+              </li>
+
             <li className="add_listing">
               <Link href="/">Home</Link>
             </li>

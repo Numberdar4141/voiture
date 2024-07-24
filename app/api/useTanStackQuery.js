@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 const API_HOST = "http://localhost:4200/v1/";
 
 export const SearchCar = async (item) => {
-  const url = API_HOST + "search";
+  const url = "http://localhost:4000/admin/inventory/get-inventory";
 
   const { data } = await axios.post(url,item);
   console.log(data)
@@ -23,17 +23,19 @@ export const CarDetails = async (id) => {
   return data?.data;
 };
 
-export const Brands = async () => {
-  const url = API_HOST + "brands";
-  const { data } = await axios.get(url);
+export const Brands = async (params) => {
+  const url = "http://localhost:4000/public/get-make";
+  const { data } = await axios.get(url, {
+    params: params  // Pass query parameters here
+  });
   return data?.data;
 };
-export const Models = async (brandIds) => {
-  console.log(brandIds);
+export const Models = async (make) => {
+  console.log(make);
  
-  const url = API_HOST + "models";
+  const url = "http://localhost:4000/public/get-model";
   const params = {
-    brandId: brandIds,
+    make: make,
   };
   const { data } = await axios.get(url, { params });
   return data?.data;

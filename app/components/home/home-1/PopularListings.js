@@ -76,7 +76,7 @@ const PopularListings = () => {
         }}
       >
         {SearchData.map((car) => (
-          <SwiperSlide key={car.car_id}>
+          <SwiperSlide key={car.carSkuId}>
             <div className="item">
               <div className="car-listing">
                 <div className="thumb">
@@ -100,8 +100,8 @@ const PopularListings = () => {
                       objectFit: "cover",
                     }}
                     priority
-                    src={car.image_url}
-                    alt={car.model}
+                    src={car.imageUrl}
+                    alt={car.modalName}
                   />
                   <div className="thmb_cntnt2">
                     <ul className="mb0">
@@ -135,7 +135,8 @@ const PopularListings = () => {
                 <div className="details">
                   <div className="wrapper">
                     <h6 className="title">
-                      <Link href="/listing-single-v1">{car.make_year}{" "}{car.brand_name}{" "}{car.model}{" "}{car.variant}</Link>
+                      <Link href="/listing-single-v1">{car.make_year} {car.make} {car.modalName}{" "}
+                      {car.varientName}</Link>
                     </h6>
                     <h5 className="price"><span>&#8377;</span> {formatNumberWithCommas(car?.discounted_price)}</h5>
                     <p className="text-xs lg:text-[9px] xl:text-[12px] font-medium text-green-700">

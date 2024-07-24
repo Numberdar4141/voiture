@@ -35,7 +35,7 @@ const CarItems = () => {
     <>
       <QueryClientProvider client={queryClient}>
       {SearchData.map((car) => (
-        <div className="col-sm-6 col-lg-4 col-xl-3" key={car.car_id}>
+        <div className="col-sm-6 col-lg-4 col-xl-3" key={car.carSkuId}>
           <div className="car-listing">
             <div className="thumb">
               {car.featured ? (
@@ -58,7 +58,7 @@ const CarItems = () => {
                   objectFit: "cover",
                 }}
                 priority
-                src={car.image_url}
+                src={car.imageUrl}
                 alt={car.model}
               />
                <div className="thmb_cntnt2">
@@ -93,7 +93,8 @@ const CarItems = () => {
             <div className="details">
                 <div className="wrapper">
                 <h6 className="title">
-                    <Link href="/listing-single-v1">{car.make_year}{" "}{car.brand_name}{" "}{car.model}{" "}{car.variant}</Link>
+                    <Link href="/listing-single-v1">{car.make_year} {car.make} {car.modalName}{" "}
+                    {car.varientName}</Link>
                   </h6>
                   <h5 className="price"><span>&#8377;</span> {formatNumberWithCommas(car?.discounted_price)}</h5>
                   <p className="text-xs lg:text-[9px] xl:text-[12px] font-medium text-green-700">
