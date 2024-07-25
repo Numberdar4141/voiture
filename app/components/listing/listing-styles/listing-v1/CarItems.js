@@ -3,21 +3,11 @@ import listingCar from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
 import { QueryClientProvider, useQuery , QueryClient} from "@tanstack/react-query";
-import SearchCar from "../../../../api/useTanStackQuery";
 import { FaLocationDot } from "react-icons/fa6";
 
-const CarItems = () => {
+const CarItems = ({SearchData}) => {
   const queryClient = new QueryClient();
 
-  const {
-    data: SearchData = [],
-    isLoading: SearchIsLoading,
-    isError: SearchIsError,
-  } = useQuery({
-    queryKey: ["SearchCarKey"],
-    queryFn: SearchCar,
-    staleTime: 5000,
-  });
 
   const formatKilometers = (kms) => {
     if (kms >= 1000) {
@@ -26,15 +16,14 @@ const CarItems = () => {
     return `${kms} KM`;
   };
 
-  if (SearchIsLoading) return <div>Loading...</div>;
-  if (SearchIsError) return <div>Error loading data...</div>;
+ 
   const formatNumberWithCommas = (number) => {
     return new Intl.NumberFormat("en-IN").format(number);
   };
   return (
     <>
       <QueryClientProvider client={queryClient}>
-      {SearchData.map((car) => (
+      {SearchData?.map((car) => (
         <div className="col-sm-6 col-lg-4 col-xl-3" key={car.carSkuId}>
           <div className="car-listing">
             <div className="thumb">

@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Brands, Models } from "../../api/useTanStackQuery";
+import queryString from "query-string";
+import Link from "next/link";
+
 
 const HeroFilter = () => {
-  // const router = useRouter();
+  const routes = useRouter();
 
   const [selectedStatus, setSelectedStatus] = useState("All Status");
   const [carMakes, setCarMakes] = useState([]);
@@ -13,6 +21,7 @@ const HeroFilter = () => {
   const [carMake, setCarMake] = useState("");
   const [carModel, setCarModel] = useState("");
   const [selectedBrandId, setSelectedBrandId] = useState("");
+  const [search, setSearch] = useState({ make: "", model: "" });
 
   useEffect(() => {
     const fetchCarMakes = async () => {
@@ -26,6 +35,18 @@ const HeroFilter = () => {
 
     fetchCarMakes();
   }, []);
+
+  useEffect(() => {
+    setSearch({ make: selectedBrandId, model: carModel });
+  }, [carMake,carModel]);
+
+
+  // const formatUrl = (string) => {
+  //   if (typeof string === "string") {
+  //     return string.toLowerCase().replace(/\s+/g, "-");
+  //   }
+  //   return "";
+  // };
 
   useEffect(() => {
     const fetchCarModels = async () => {
@@ -57,28 +78,40 @@ const HeroFilter = () => {
     }
   };
 
+  
+
   const handleModelChange = (event, value) => {
     setCarModel(value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission with selectedBrandId, selectedModelId, and other fields
-    console.log("Selected Brand ID:", selectedBrandId);
-    console.log("Selected Model:", carModel);
-    // Example: router.push('/listing-v4');
+
+
+  const handleSearch = () => {
+    let query = {};
+ 
+    if (carMake) {
+      query.make = carMake;
+    };
+    if (carModel) {
+      query.model = carModel;
+    };
+
+    const queryStringified = queryString.stringify(query);
+    const url = `/listing-v1?${queryStringified}`;
+
+    routes.push(url);
   };
 
   return (
     <div className="col-lg-12">
       <ul className="nav nav-pills justify-content-center">
         <li className="nav-item" role="presentation">
-          <button
+          {/* <button
             className={`nav-link ${selectedStatus === "All Status" && "active"}`}
             onClick={() => handleStatusClick("All Status")}
           >
             All Status
-          </button>
+          </button> */}
         </li>
         <li className="nav-item" role="presentation">
           <button
@@ -89,18 +122,18 @@ const HeroFilter = () => {
           </button>
         </li>
         <li className="nav-item" role="presentation">
-          <button
+          {/* <button
             className={`nav-link ${selectedStatus === "New Cars" && "active"}`}
             onClick={() => handleStatusClick("New Cars")}
           >
             New Cars
-          </button>
+          </button> */}
         </li>
       </ul>
 
       <div className="adss_bg_stylehome1">
         <div className="home1_advance_search_wrapper">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSearch}>
             <ul className="mb0 text-center">
               {/* Brand selection */}
               <li className="list-inline-item">
@@ -146,13 +179,16 @@ const HeroFilter = () => {
               {/* Search button */}
               <li className="list-inline-item">
                 <div className="d-block">
+                  <Link href={`/listing-v1?make=${encodeURIComponent(carMake)}&model=${encodeURIComponent(carModel)}`}>
                   <button
                     type="submit"
+             
                     className="btn btn-thm advnc_search_form_btn"
                   >
                     <span className="flaticon-magnifiying-glass" />
                     Search
                   </button>
+                  </Link>
                 </div>
               </li>
             </ul>

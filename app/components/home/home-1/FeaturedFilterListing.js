@@ -63,9 +63,9 @@ const FeaturedFilterListing = () => {
       {/* Tab panes */}
       <div className="row">
         {SearchData.map((car) => (
-          <div className="col-sm-6 col-xl-3" key={car.car_id}>
+          <div className="col-sm-6 col-xl-3" key={car.carSkuId}>
             <Link
-              href={`/listing-single-v1/${car.car_id}`}
+              href={`/listing-single-v1/${car.carSkuId}`}
               passHref
               scroll={false}
             >

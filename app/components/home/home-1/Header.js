@@ -73,9 +73,9 @@ const Header = () => {
               <Link href="/cart">Shortlist</Link>
             </li>
             <MainMenu />
-            <li className="add_listing">
+            {/* <li className="add_listing">
               <Link href="/add-listings">+ Add Listing</Link>
-            </li>
+            </li> */}
             <li
               className="sidebar_panel"
               data-bs-toggle="offcanvas"
