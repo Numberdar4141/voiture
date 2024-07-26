@@ -21,6 +21,7 @@ const HeroFilter = () => {
   const [carMake, setCarMake] = useState("");
   const [carModel, setCarModel] = useState("");
   const [selectedBrandId, setSelectedBrandId] = useState("");
+  const [selectedModelId, setSelectedModelId] = useState("");
   const [search, setSearch] = useState({ make: "", model: "" });
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const HeroFilter = () => {
   }, []);
 
   useEffect(() => {
-    setSearch({ make: selectedBrandId, model: carModel });
+    setSearch({ make: selectedBrandId, model: selectedModelId });
   }, [carMake,carModel]);
 
 
@@ -70,19 +71,27 @@ const HeroFilter = () => {
   };
 
   const handleBrandChange = async (event, value) => {
-    const selectedBrand = carMakes.find((option) => option.makeName === value);
-    if (selectedBrand) {
-      setCarMake(selectedBrand.makeName);
-      setSelectedBrandId(selectedBrand.id);
+    const selectedModel = carModel.find((option) => option.modelName === value);
+    if (selectedModel) {
+      setCarMake(selectedModel.modelName);
+      setSelectedModelId(selectedModel.ModelId);
       setCarModel("");
     }
   };
 
   
 
-  const handleModelChange = (event, value) => {
-    setCarModel(value);
+ 
+
+  const handleModelChange = async (event, value) => {
+    const selectedBrand = carMakes.find((option) => option.makeName === value);
+    if (selectedBrand) {
+      setCarMake(selectedBrand.makeName);
+      setSelectedBrandId(selectedBrand.id);
+      setCarModel(selectedModel);
+    }
   };
+
 
 
 

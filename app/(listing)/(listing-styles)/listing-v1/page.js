@@ -62,19 +62,23 @@ const ListingV1 = () => {
   };
 
   const fetchCarModels = async () => {
-      try {
-        const modelsData = await Models(makeId);
-        setCarModel(modelsData || []);
-        console.log("pagemodel", carModel);
-      } catch (error) {
-        console.error("Error fetching car models:", error);
-      }
+    try {
+      const modelsData = await Models(make);
+      setCarModel(modelsData || []);
+      console.log("pagemodel", carModel);
+    } catch (error) {
+      console.error("Error fetching car models:", error);
+    }
   };
 
   useEffect(() => {
     fetchCarMakes();
   }, []);
 
+
+  useEffect(() =>{
+    fetchCarModels();
+  },[]);
 
   const SearchCarSuccessHandler = (data) => {
     setFilteData(data);
@@ -94,23 +98,50 @@ const ListingV1 = () => {
   );
 
   useEffect(() => {
-    let filterObj = { ...selectedFilters };
-
-    if (carMake.length !== 0) {
+    // Initialize variables to hold IDs
+    let selectedMakeId = null;
+    let selectedModelId = null;
+  
+    // Check carMake and set selectedMakeId if found
+    if (carMake.length > 0 && makeqr) {
       console.log("carmake ===> ", carMake);
-      const item = carMake.find(
+      const makeItem = carMake.find(
         (item) => item.makeName.toLowerCase() === makeqr.toLowerCase()
       );
-      if (item) {
-        mutate({ make: [item.makeId] });
-      };
+      if (makeItem) {
+        selectedMakeId = makeItem.id; // Set selected make ID
+        console.log("Selected make id: ", selectedMakeId);
+      } else {
+        console.warn("No matching make found for:", makeqr);
+      }
     }
-
-    if (modelqr) {
-      // mutate("");
+  
+    // Check carModel and set selectedModelId if found
+    if (carModel.length > 0 && modelqr) {
+      console.log("carmodel ===>",carModel);
+      const modelItem = carModel.find(
+        (item) => item.modelName.toLowerCase() === modelqr.toLowerCase()
+      );
+      if (modelItem) {
+        selectedModelId = modelItem.modelId; // Set selected model ID
+        console.log("Selected model id: ", selectedModelId);
+        console.log("model itweem" ,modelItem)
+      } else {
+        console.warn("No matching model found for:", modelqr);
+      }
     }
-    // mutate("");
-  }, [carMake, params,makeqr, modelqr]);
+  
+    // Only call mutate if we have valid IDs
+    const payload = {};
+    if (selectedMakeId) payload.make = [selectedMakeId];
+    if (selectedModelId) payload.model_id = [selectedModelId];
+  
+    if (Object.keys(payload).length > 0) {
+      mutate(payload);
+      console.log("Payload sent to mutate:", payload);
+    }
+  
+  }, [carMake, carModel, makeqr, modelqr]);
 
   return (
     <div className="wrapper">

@@ -5,7 +5,7 @@ const API_HOST = "http://localhost:4200/v1/";
 
 const SearchCar = async (item) => {
   console.log(item);
-  const url = "http://localhost:4000/admin/inventory/get-inventory";
+  const url = "http://localhost:4000/admin/inventory/search";
 
   const { data } = await axios.post(url,item);
   console.log(data);
@@ -31,16 +31,20 @@ export const Brands = async (params) => {
   });
   return data?.data;
 };
-export const Models = async (make) => {
-  console.log(make);
- 
-
+export const Models = async (make, modelId) => {
+  console.log("Fetching models for make: ", make);
+  console.log("Model ID: ", modelId);
+  
   const url = "http://localhost:4000/public/get-model";
   const params = {
     make: make,
+    model_id: modelId
   };
+  console.log("Sending request to URL: ", url);
+  console.log("With params: ", params);
   const { data } = await axios.get(url, { params });
   
+  console.log("Received response: ", data);
   return data?.data;
 };
 
